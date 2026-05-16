@@ -1,0 +1,7 @@
+*.log
+server.js
+*.out.log
+*.err.log
+localtunnel*
+ssh-tunnel*
+gh-auth*
