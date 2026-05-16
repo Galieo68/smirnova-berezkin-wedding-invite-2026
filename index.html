@@ -6,9 +6,9 @@
   <meta name="theme-color" content="#f4e8dc">
   <meta
     name="description"
-    content="Приглашение на свадьбу Смирновой Александры и Березкина Ивана."
+    content="Приглашение на свадьбу Александры и Ивана."
   >
-  <title>Приглашение на свадьбу | Смирнова Александра и Березкин Иван</title>
+  <title>Приглашение на свадьбу | Александра и Иван</title>
   <style>
     :root {
       --bg: #f6efe6;
@@ -130,7 +130,7 @@
     .hero-card {
       position: relative;
       overflow: hidden;
-      padding: clamp(24px, 4vw, 46px);
+      padding: clamp(18px, 3vw, 32px);
       animation: heroDrift 10s ease-in-out infinite;
     }
 
@@ -157,6 +157,135 @@
       left: -4rem;
       bottom: -5rem;
       background: radial-gradient(circle, rgba(191, 206, 187, 0.38), rgba(191, 206, 187, 0) 70%);
+    }
+
+    .envelope-stage {
+      position: relative;
+      min-height: clamp(500px, 66vw, 700px);
+      display: grid;
+      place-items: center;
+      padding: clamp(20px, 3vw, 34px);
+      perspective: 1800px;
+      animation: envelopeHover 9s ease-in-out infinite;
+    }
+
+    .envelope-shell {
+      position: absolute;
+      left: 6%;
+      right: 6%;
+      bottom: 11%;
+      top: 18%;
+      border-radius: 30px;
+      background:
+        linear-gradient(145deg, rgba(247, 236, 221, 0.98) 0%, rgba(231, 214, 190, 0.96) 100%);
+      border: 1px solid rgba(82, 61, 42, 0.12);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.72),
+        0 22px 44px rgba(64, 47, 29, 0.14);
+      overflow: hidden;
+    }
+
+    .envelope-shell::before,
+    .envelope-shell::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .envelope-shell::before {
+      background:
+        linear-gradient(135deg, transparent 49.1%, rgba(155, 120, 82, 0.2) 49.7%, transparent 50.2%),
+        linear-gradient(225deg, transparent 49.1%, rgba(155, 120, 82, 0.15) 49.7%, transparent 50.2%);
+      opacity: 0.85;
+    }
+
+    .envelope-shell::after {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0));
+    }
+
+    .envelope-flap {
+      position: absolute;
+      left: 9%;
+      right: 9%;
+      top: 8%;
+      height: 42%;
+      border-radius: 24px 24px 12px 12px;
+      background:
+        linear-gradient(180deg, rgba(248, 240, 229, 0.98) 0%, rgba(226, 205, 180, 0.95) 100%);
+      clip-path: polygon(0 100%, 50% 0, 100% 100%, 50% 72%);
+      transform-origin: 50% 100%;
+      transform: rotateX(18deg);
+      transition: transform 1.08s cubic-bezier(0.2, 0.75, 0.2, 1);
+      z-index: 3;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.72);
+    }
+
+    .envelope-stage.is-open .envelope-flap {
+      transform: rotateX(178deg) translateY(-10%);
+    }
+
+    .envelope-front {
+      position: absolute;
+      left: 8%;
+      right: 8%;
+      bottom: 10%;
+      height: 44%;
+      border-radius: 0 0 26px 26px;
+      background:
+        linear-gradient(180deg, rgba(252, 247, 239, 0.52), rgba(228, 207, 180, 0.98));
+      clip-path: polygon(0 0, 50% 54%, 100% 0, 100% 100%, 0 100%);
+      z-index: 1;
+      box-shadow: inset 0 -1px 0 rgba(82, 61, 42, 0.08);
+    }
+
+    .envelope-letter {
+      position: relative;
+      z-index: 2;
+      width: min(100%, 690px);
+      border-radius: 28px;
+      background:
+        linear-gradient(180deg, rgba(255, 254, 250, 0.98) 0%, rgba(251, 246, 239, 0.96) 100%);
+      border: 1px solid rgba(82, 61, 42, 0.12);
+      box-shadow: 0 22px 44px rgba(64, 47, 29, 0.16);
+      padding: clamp(24px, 3.4vw, 40px);
+      transform: translateY(14px) scale(0.985);
+      transition: transform 1.05s cubic-bezier(0.2, 0.75, 0.2, 1), box-shadow 1.05s ease;
+    }
+
+    .envelope-stage.is-open .envelope-letter {
+      transform: translateY(-18px) scale(1);
+      box-shadow: 0 28px 60px rgba(64, 47, 29, 0.18);
+    }
+
+    .envelope-seal {
+      position: absolute;
+      left: 50%;
+      top: 53%;
+      width: 84px;
+      height: 84px;
+      display: grid;
+      place-items: center;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0) 36%),
+        linear-gradient(180deg, #d7ab79 0%, #b87f50 100%);
+      color: #fffaf5;
+      font-family: var(--serif);
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      font-size: 1rem;
+      border: 1px solid rgba(82, 61, 42, 0.12);
+      box-shadow: 0 16px 28px rgba(84, 58, 31, 0.24);
+      z-index: 4;
+      transition: transform 1s ease, opacity 1s ease, filter 1s ease;
+    }
+
+    .envelope-stage.is-open .envelope-seal {
+      transform: translate(-50%, -50%) scale(0.78) rotate(-10deg);
+      opacity: 0.36;
+      filter: saturate(0.92);
     }
 
     .hero-copy > * {
@@ -807,6 +936,11 @@
       50% { transform: translateY(-4px); }
     }
 
+    @keyframes envelopeHover {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
     @keyframes cardFloat {
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-5px); }
@@ -912,22 +1046,30 @@
 
     <section class="hero">
       <article class="hero-card panel reveal">
-        <div class="hero-copy">
-          <p class="eyebrow">Смирнова Александра и Березкин Иван</p>
-          <h1 class="names">
-            Смирнова Александра
-            <span>и</span>
-            Березкин Иван
-          </h1>
-          <p class="lede">
-            Мы будем счастливы разделить с вами один из самых светлых дней нашей жизни.
-            Пусть этот вечер будет тёплым, лёгким и очень близким по духу.
-          </p>
-          <div class="hero-actions">
-            <a class="button primary" href="#details">Открыть приглашение</a>
-            <a class="button secondary" href="#rsvp">Оставить ответ</a>
+        <div class="envelope-stage" id="envelope-stage">
+          <div class="envelope-shell" aria-hidden="true"></div>
+          <div class="envelope-letter">
+            <div class="hero-copy">
+              <p class="eyebrow">Приглашение на свадьбу</p>
+              <h1 class="names">
+                Александра
+                <span>и</span>
+                Иван
+              </h1>
+              <p class="lede">
+                Мы будем счастливы разделить с вами один из самых светлых дней нашей жизни.
+                Пусть этот вечер будет тёплым, лёгким и очень близким по духу.
+              </p>
+              <div class="hero-actions">
+                <a class="button primary" href="#details">Открыть приглашение</a>
+                <a class="button secondary" href="#rsvp">Оставить ответ</a>
+              </div>
+              <p class="quote">«Пусть рядом будут самые дорогие люди, а каждый миг этого дня останется в памяти навсегда.»</p>
+            </div>
           </div>
-          <p class="quote">«Пусть рядом будут самые дорогие люди, а каждый миг этого дня останется в памяти навсегда.»</p>
+          <div class="envelope-flap" aria-hidden="true"></div>
+          <div class="envelope-front" aria-hidden="true"></div>
+          <div class="envelope-seal" aria-hidden="true">АИ</div>
         </div>
       </article>
 
@@ -1093,7 +1235,7 @@
     </section>
 
     <footer class="footer reveal">
-      С любовью, Смирнова Александра и Березкин Иван
+      С любовью, Александра и Иван
     </footer>
   </main>
 
@@ -1195,6 +1337,19 @@
 
     document.documentElement.classList.remove('no-js');
     document.documentElement.classList.add('js');
+
+    const envelopeStage = document.getElementById('envelope-stage');
+    if (envelopeStage) {
+      const openEnvelope = () => envelopeStage.classList.add('is-open');
+
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        openEnvelope();
+      } else {
+        requestAnimationFrame(() => {
+          setTimeout(openEnvelope, 220);
+        });
+      }
+    }
 
     if (rsvpForm) {
       rsvpForm.addEventListener('submit', async (event) => {
