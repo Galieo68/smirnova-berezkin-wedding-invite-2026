@@ -642,7 +642,7 @@
           </p>
           <div class="hero-actions">
             <a class="button primary" href="#details">Открыть приглашение</a>
-            <button class="button secondary" type="button" id="copy-rsvp-top">Скопировать ответ</button>
+            <a class="button secondary" href="responses.html">Страница ответов</a>
           </div>
           <p class="quote">«Пусть рядом будут самые дорогие люди, а каждый миг этого дня останется в памяти навсегда.»</p>
         </div>
@@ -734,31 +734,12 @@
       </p>
     </section>
 
-    <section class="section panel reveal">
-      <div class="rsvp">
-        <div>
-          <span class="section-label">Подтверждение</span>
-          <h2 class="section-title">Если вы будете с нами, дайте знать удобным сообщением</h2>
-          <p>
-            Кнопка копирует короткий текст ответа, который можно сразу отправить в мессенджере
-            или сохранить для себя.
-          </p>
-        </div>
-        <button class="button primary" type="button" id="copy-rsvp-bottom">Скопировать ответ</button>
-      </div>
-    </section>
-
     <footer class="footer reveal">
       С любовью, Смирнова Александра и Березкин Иван
     </footer>
   </main>
 
-  <div class="toast" id="toast" role="status" aria-live="polite">Текст скопирован</div>
-
   <script>
-    const rsvpText = 'Здравствуйте! С радостью буду на свадьбе Смирновой Александры и Березкина Ивана.';
-    const toast = document.getElementById('toast');
-    let toastTimer = null;
     const revealItems = document.querySelectorAll('.reveal');
 
     revealItems.forEach((item, index) => {
@@ -776,48 +757,6 @@
 
     document.documentElement.classList.remove('no-js');
     document.documentElement.classList.add('js');
-
-    function showToast(message) {
-      toast.textContent = message;
-      toast.classList.add('show');
-
-      if (toastTimer) {
-        clearTimeout(toastTimer);
-      }
-
-      toastTimer = setTimeout(() => {
-        toast.classList.remove('show');
-      }, 2200);
-    }
-
-    async function copyText(text) {
-      try {
-        if (navigator.clipboard && window.isSecureContext) {
-          await navigator.clipboard.writeText(text);
-        } else {
-          const field = document.createElement('textarea');
-          field.value = text;
-          field.setAttribute('readonly', '');
-          field.style.position = 'fixed';
-          field.style.opacity = '0';
-          field.style.pointerEvents = 'none';
-          document.body.appendChild(field);
-          field.focus();
-          field.select();
-          field.setSelectionRange(0, field.value.length);
-          document.execCommand('copy');
-          field.remove();
-        }
-
-        showToast('Текст скопирован');
-      } catch (error) {
-        showToast('Скопируйте текст вручную');
-      }
-    }
-
-    document.querySelectorAll('#copy-rsvp-top, #copy-rsvp-bottom').forEach((button) => {
-      button.addEventListener('click', () => copyText(rsvpText));
-    });
 
     if ('IntersectionObserver' in window) {
       const observer = new IntersectionObserver((entries) => {

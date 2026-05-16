@@ -1,0 +1,926 @@
+<!doctype html>
+<html lang="ru" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4e8dc">
+  <meta
+    name="description"
+    content="Страница для ручного учёта ответов на свадьбу Смирновой Александры и Березкина Ивана."
+  >
+  <title>Ответы на приглашение | Смирнова Александра и Березкин Иван</title>
+  <style>
+    :root {
+      --bg: #f6efe6;
+      --paper: rgba(255, 252, 247, 0.78);
+      --paper-strong: rgba(255, 252, 247, 0.94);
+      --text: #2f2721;
+      --muted: #6f6256;
+      --accent: #9b7852;
+      --accent-soft: #d6c0aa;
+      --line: rgba(82, 61, 42, 0.12);
+      --shadow: 0 28px 70px rgba(64, 47, 29, 0.12);
+      --serif: "Georgia", "Times New Roman", serif;
+      --sans: "Segoe UI", "Inter", "Arial", sans-serif;
+      --radius-xl: 30px;
+      --radius-lg: 24px;
+      --radius-md: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: var(--sans);
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(219, 197, 174, 0.35), transparent 36%),
+        radial-gradient(circle at top right, rgba(205, 220, 196, 0.4), transparent 28%),
+        radial-gradient(circle at bottom left, rgba(224, 200, 186, 0.45), transparent 30%),
+        linear-gradient(180deg, #fbf7f1 0%, var(--bg) 100%);
+      overflow-x: hidden;
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      inset: auto;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    body::before {
+      top: -9rem;
+      right: -6rem;
+      width: 24rem;
+      height: 24rem;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(220, 201, 181, 0.55), rgba(220, 201, 181, 0) 70%);
+      filter: blur(12px);
+      animation: orbDriftTop 18s ease-in-out infinite;
+    }
+
+    body::after {
+      left: -8rem;
+      bottom: -10rem;
+      width: 28rem;
+      height: 28rem;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(192, 208, 189, 0.55), rgba(192, 208, 189, 0) 68%);
+      filter: blur(14px);
+      animation: orbDriftBottom 20s ease-in-out infinite;
+    }
+
+    .page {
+      position: relative;
+      z-index: 1;
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 24px 0 56px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 10px 16px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.48);
+      color: var(--accent);
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      font-size: 0.72rem;
+      font-weight: 600;
+      box-shadow: 0 10px 28px rgba(88, 64, 41, 0.06);
+      animation: softGlow 5s ease-in-out infinite;
+    }
+
+    .panel {
+      background: linear-gradient(180deg, var(--paper-strong) 0%, var(--paper) 100%);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+
+    .hero {
+      margin-top: 18px;
+      display: grid;
+      gap: 18px;
+    }
+
+    .hero-card {
+      position: relative;
+      overflow: hidden;
+      padding: clamp(24px, 4vw, 46px);
+      animation: heroDrift 10s ease-in-out infinite;
+    }
+
+    .hero-card::before,
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      opacity: 0.9;
+    }
+
+    .hero-card::before {
+      width: 18rem;
+      height: 18rem;
+      right: -7rem;
+      top: -6rem;
+      background: radial-gradient(circle, rgba(211, 188, 166, 0.38), rgba(211, 188, 166, 0) 68%);
+    }
+
+    .hero-card::after {
+      width: 13rem;
+      height: 13rem;
+      left: -4rem;
+      bottom: -5rem;
+      background: radial-gradient(circle, rgba(191, 206, 187, 0.38), rgba(191, 206, 187, 0) 70%);
+    }
+
+    .hero-copy {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 18px;
+      align-content: start;
+    }
+
+    .hero-copy > * {
+      animation: riseUp 0.8s ease both;
+    }
+
+    .hero-copy > *:nth-child(1) { animation-delay: 0.05s; }
+    .hero-copy > *:nth-child(2) { animation-delay: 0.12s; }
+    .hero-copy > *:nth-child(3) { animation-delay: 0.2s; }
+    .hero-copy > *:nth-child(4) { animation-delay: 0.28s; }
+
+    .eyebrow {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.92rem;
+      line-height: 1.6;
+    }
+
+    .names {
+      margin: 0;
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: clamp(2.4rem, 6vw, 4.4rem);
+      line-height: 1;
+      letter-spacing: -0.04em;
+    }
+
+    .lede {
+      margin: 0;
+      max-width: 68ch;
+      color: var(--muted);
+      font-size: 1.03rem;
+      line-height: 1.9;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .stat {
+      padding: 18px 20px;
+      border-radius: var(--radius-md);
+      background: rgba(255, 255, 255, 0.55);
+      border: 1px solid rgba(82, 61, 42, 0.09);
+      transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+    }
+
+    .stat:hover {
+      transform: translateY(-3px);
+      border-color: rgba(155, 120, 82, 0.18);
+      box-shadow: 0 16px 34px rgba(77, 57, 38, 0.08);
+    }
+
+    .stat-value {
+      margin: 0 0 6px;
+      font-family: var(--serif);
+      font-size: 2rem;
+      color: var(--accent);
+      line-height: 1;
+    }
+
+    .stat-label {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .layout {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+      gap: 18px;
+      align-items: start;
+    }
+
+    .form-card,
+    .list-card {
+      padding: clamp(22px, 3.4vw, 38px);
+    }
+
+    .section-label {
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.24em;
+      font-size: 0.72rem;
+      font-weight: 700;
+    }
+
+    .section-title {
+      margin: 8px 0 0;
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: clamp(1.7rem, 3.6vw, 2.5rem);
+      line-height: 1.12;
+      letter-spacing: -0.03em;
+    }
+
+    .section-subtitle {
+      margin: 10px 0 0;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .form {
+      margin-top: 22px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .field {
+      display: grid;
+      gap: 8px;
+    }
+
+    .field label {
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-size: 0.7rem;
+      font-weight: 700;
+    }
+
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      padding: 15px 16px;
+      border-radius: 16px;
+      border: 1px solid rgba(82, 61, 42, 0.12);
+      background: rgba(255, 255, 255, 0.76);
+      color: var(--text);
+      font: inherit;
+      line-height: 1.5;
+      transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+    }
+
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      outline: none;
+      border-color: rgba(155, 120, 82, 0.35);
+      box-shadow: 0 0 0 4px rgba(155, 120, 82, 0.12);
+    }
+
+    .field textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .button {
+      appearance: none;
+      border: 0;
+      border-radius: 999px;
+      padding: 14px 18px;
+      font: inherit;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 180ms ease, box-shadow 180ms ease, background-color 180ms ease, color 180ms ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+    }
+
+    .button:hover {
+      transform: translateY(-1px);
+    }
+
+    .button.primary {
+      color: #fffaf5;
+      background: linear-gradient(135deg, #2f2721 0%, #4f3e30 100%);
+      box-shadow: 0 12px 24px rgba(47, 39, 33, 0.2);
+    }
+
+    .button.secondary {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.65);
+      border: 1px solid rgba(82, 61, 42, 0.14);
+    }
+
+    .button.danger {
+      color: #7a3427;
+      background: rgba(246, 224, 214, 0.76);
+      border: 1px solid rgba(122, 52, 39, 0.14);
+    }
+
+    .list-head {
+      display: grid;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .responses {
+      display: grid;
+      gap: 12px;
+    }
+
+    .response {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 14px;
+      padding: 18px 20px;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(82, 61, 42, 0.09);
+      background: rgba(255, 255, 255, 0.5);
+      transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+    }
+
+    .response:hover {
+      transform: translateY(-2px);
+      border-color: rgba(155, 120, 82, 0.18);
+      box-shadow: 0 16px 34px rgba(77, 57, 38, 0.08);
+    }
+
+    .response-main {
+      display: grid;
+      gap: 8px;
+    }
+
+    .response-top {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .response-name {
+      font-size: 1.05rem;
+      font-weight: 700;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .pill.going {
+      background: rgba(209, 224, 202, 0.75);
+      color: #3f5c34;
+    }
+
+    .pill.not-going {
+      background: rgba(242, 216, 210, 0.8);
+      color: #7a3427;
+    }
+
+    .pill.maybe {
+      background: rgba(238, 228, 200, 0.84);
+      color: #7a6030;
+    }
+
+    .response-meta {
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .response-actions {
+      display: flex;
+      align-items: start;
+      gap: 8px;
+    }
+
+    .mini-button {
+      appearance: none;
+      border: 1px solid rgba(82, 61, 42, 0.12);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.7);
+      color: var(--text);
+      padding: 10px 12px;
+      font: inherit;
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: transform 180ms ease, border-color 180ms ease, background-color 180ms ease;
+    }
+
+    .mini-button:hover {
+      transform: translateY(-1px);
+      border-color: rgba(155, 120, 82, 0.2);
+      background: rgba(255, 255, 255, 0.92);
+    }
+
+    .empty {
+      padding: 24px;
+      border-radius: 22px;
+      border: 1px dashed rgba(82, 61, 42, 0.16);
+      background: rgba(255, 255, 255, 0.44);
+      color: var(--muted);
+      line-height: 1.8;
+      text-align: center;
+    }
+
+    .footer {
+      padding: 20px 0 8px;
+      text-align: center;
+      color: var(--muted);
+      font-family: var(--serif);
+      font-size: 1.04rem;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 22px;
+      transform: translate(-50%, 20px);
+      padding: 12px 18px;
+      border-radius: 999px;
+      background: rgba(47, 39, 33, 0.96);
+      color: #fffaf5;
+      box-shadow: 0 20px 40px rgba(47, 39, 33, 0.24);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 180ms ease, transform 180ms ease;
+      z-index: 20;
+      white-space: nowrap;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+
+    .js .reveal {
+      opacity: 0;
+      transform: translateY(28px) scale(0.985);
+      transition: opacity 800ms ease, transform 800ms cubic-bezier(0.2, 0.7, 0.2, 1);
+      transition-delay: var(--reveal-delay, 0ms);
+    }
+
+    .js .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @keyframes riseUp {
+      from {
+        opacity: 0;
+        transform: translateY(14px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes heroDrift {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
+    }
+
+    @keyframes softGlow {
+      0%, 100% { filter: drop-shadow(0 0 0 rgba(155, 120, 82, 0)); }
+      50% { filter: drop-shadow(0 0 14px rgba(155, 120, 82, 0.12)); }
+    }
+
+    @keyframes orbDriftTop {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(-14px, 18px) scale(1.04); }
+    }
+
+    @keyframes orbDriftBottom {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(16px, -14px) scale(1.05); }
+    }
+
+    @media (max-width: 960px) {
+      .stats,
+      .layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .page {
+        width: min(100% - 18px, 1120px);
+        padding-top: 10px;
+        padding-bottom: 28px;
+      }
+
+      .response {
+        grid-template-columns: 1fr;
+      }
+
+      .button,
+      .mini-button {
+        width: 100%;
+      }
+
+      .actions {
+        flex-direction: column;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <div class="badge reveal">Ответы на приглашение</div>
+
+    <section class="hero">
+      <article class="hero-card panel reveal">
+        <div class="hero-copy">
+          <p class="eyebrow">Смирнова Александра и Березкин Иван</p>
+          <h1 class="names">Учёт ответов гостей</h1>
+          <p class="lede">
+            Здесь можно вручную записывать, кто идёт, кто не сможет и кому ещё нужно уточнить.
+            Ответы сохраняются в этом браузере, поэтому вы сразу видите актуальный список.
+          </p>
+        </div>
+      </article>
+    </section>
+
+    <section class="stats">
+      <div class="stat panel reveal">
+        <p class="stat-value" id="going-count">0</p>
+        <p class="stat-label">Идут</p>
+      </div>
+      <div class="stat panel reveal">
+        <p class="stat-value" id="not-going-count">0</p>
+        <p class="stat-label">Не идут</p>
+      </div>
+      <div class="stat panel reveal">
+        <p class="stat-value" id="maybe-count">0</p>
+        <p class="stat-label">Ещё не ясно</p>
+      </div>
+      <div class="stat panel reveal">
+        <p class="stat-value" id="total-count">0</p>
+        <p class="stat-label">Всего ответов</p>
+      </div>
+    </section>
+
+    <section class="layout">
+      <article class="form-card panel reveal">
+        <span class="section-label">Новый ответ</span>
+        <h2 class="section-title">Добавить гостя</h2>
+        <p class="section-subtitle">
+          Вводите имя и статус по мере того, как вам пишут гости. Можно оставить примечание, если нужно.
+        </p>
+
+        <form class="form" id="response-form">
+          <div class="field">
+            <label for="guest-name">Имя гостя</label>
+            <input id="guest-name" name="guest-name" type="text" placeholder="Например, Анна и Сергей" required>
+          </div>
+
+          <div class="field">
+            <label for="guest-status">Статус</label>
+            <select id="guest-status" name="guest-status">
+              <option value="going">Идёт</option>
+              <option value="not-going">Не идёт</option>
+              <option value="maybe">Пока не знает</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="guest-note">Примечание</label>
+            <textarea id="guest-note" name="guest-note" placeholder="Например, придут с детьми или только на церемонию"></textarea>
+          </div>
+
+          <div class="actions">
+            <button class="button primary" type="submit">Сохранить ответ</button>
+            <button class="button secondary" type="button" id="export-json">Экспорт JSON</button>
+            <button class="button danger" type="button" id="clear-all">Очистить список</button>
+          </div>
+        </form>
+      </article>
+
+      <article class="list-card panel reveal">
+        <div class="list-head">
+          <div>
+            <span class="section-label">Список</span>
+            <h2 class="section-title">Кто идёт, а кто нет</h2>
+            <p class="section-subtitle">
+              Последние ответы наверху. Нажмите на удаление, если запись больше не нужна.
+            </p>
+          </div>
+        </div>
+
+        <div class="responses" id="responses-list" aria-live="polite"></div>
+      </article>
+    </section>
+
+    <footer class="footer reveal">
+      Ответы сохраняются только в этом браузере. Если нужен общий онлайн-учёт, я подключу форму к сервису.
+    </footer>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    const STORAGE_KEY = 'smirnova-berezkin-wedding-responses-v1';
+    const form = document.getElementById('response-form');
+    const nameInput = document.getElementById('guest-name');
+    const statusInput = document.getElementById('guest-status');
+    const noteInput = document.getElementById('guest-note');
+    const list = document.getElementById('responses-list');
+    const toast = document.getElementById('toast');
+    const counts = {
+      going: document.getElementById('going-count'),
+      notGoing: document.getElementById('not-going-count'),
+      maybe: document.getElementById('maybe-count'),
+      total: document.getElementById('total-count'),
+    };
+    const revealItems = document.querySelectorAll('.reveal');
+    let toastTimer = null;
+
+    function makeId() {
+      if (window.crypto && typeof window.crypto.randomUUID === 'function') {
+        return window.crypto.randomUUID();
+      }
+
+      return `resp-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+    }
+
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>"']/g, (char) => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;',
+      }[char]));
+    }
+
+    function statusInfo(value) {
+      switch (value) {
+        case 'going':
+          return { label: 'Идёт', className: 'going' };
+        case 'not-going':
+          return { label: 'Не идёт', className: 'not-going' };
+        default:
+          return { label: 'Пока не знает', className: 'maybe' };
+      }
+    }
+
+    function loadResponses() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        const parsed = raw ? JSON.parse(raw) : [];
+        return Array.isArray(parsed) ? parsed : [];
+      } catch (error) {
+        return [];
+      }
+    }
+
+    let responses = loadResponses();
+
+    function persistResponses() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(responses));
+    }
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add('show');
+
+      if (toastTimer) {
+        clearTimeout(toastTimer);
+      }
+
+      toastTimer = setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2200);
+    }
+
+    function formatDateTime(value) {
+      try {
+        return new Intl.DateTimeFormat('ru-RU', {
+          dateStyle: 'medium',
+          timeStyle: 'short',
+        }).format(new Date(value));
+      } catch (error) {
+        return value;
+      }
+    }
+
+    function renderStats() {
+      const going = responses.filter((item) => item.status === 'going').length;
+      const notGoing = responses.filter((item) => item.status === 'not-going').length;
+      const maybe = responses.filter((item) => item.status === 'maybe').length;
+
+      counts.going.textContent = going;
+      counts.notGoing.textContent = notGoing;
+      counts.maybe.textContent = maybe;
+      counts.total.textContent = responses.length;
+    }
+
+    function renderResponses() {
+      renderStats();
+
+      if (!responses.length) {
+        list.innerHTML = `
+          <div class="empty">
+            Пока нет ни одного ответа. Добавьте первый ответ вручную, и он появится в списке.
+          </div>
+        `;
+        return;
+      }
+
+      list.innerHTML = responses.map((item) => {
+        const metaParts = [
+          `Добавлено: ${escapeHtml(formatDateTime(item.createdAt))}`,
+        ];
+
+        if (item.note) {
+          metaParts.push(`Примечание: ${escapeHtml(item.note)}`);
+        }
+
+        const info = statusInfo(item.status);
+
+        return `
+          <article class="response">
+            <div class="response-main">
+              <div class="response-top">
+                <div class="response-name">${escapeHtml(item.name)}</div>
+                <span class="pill ${info.className}">${info.label}</span>
+              </div>
+              <div class="response-meta">${metaParts.map((part) => `<div>${part}</div>`).join('')}</div>
+            </div>
+            <div class="response-actions">
+              <button class="mini-button" type="button" data-delete="${escapeHtml(item.id)}">Удалить</button>
+            </div>
+          </article>
+        `;
+      }).join('');
+    }
+
+    function addResponse(entry) {
+      responses = [entry, ...responses];
+      persistResponses();
+      renderResponses();
+    }
+
+    revealItems.forEach((item, index) => {
+      item.style.setProperty('--reveal-delay', `${Math.min(index * 90, 540)}ms`);
+    });
+
+    document.documentElement.classList.remove('no-js');
+    document.documentElement.classList.add('js');
+
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.2,
+      });
+
+      revealItems.forEach((item) => observer.observe(item));
+    } else {
+      revealItems.forEach((item) => item.classList.add('is-visible'));
+    }
+
+    renderResponses();
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+
+      const name = nameInput.value.trim();
+      if (!name) {
+        showToast('Введите имя гостя');
+        nameInput.focus();
+        return;
+      }
+
+      addResponse({
+        id: makeId(),
+        name,
+        status: statusInput.value,
+        note: noteInput.value.trim(),
+        createdAt: new Date().toISOString(),
+      });
+
+      form.reset();
+      statusInput.value = 'going';
+      nameInput.focus();
+      showToast('Ответ сохранён');
+    });
+
+    list.addEventListener('click', (event) => {
+      const button = event.target.closest('[data-delete]');
+      if (!button) {
+        return;
+      }
+
+      const { delete: id } = button.dataset;
+      responses = responses.filter((item) => item.id !== id);
+      persistResponses();
+      renderResponses();
+      showToast('Запись удалена');
+    });
+
+    document.getElementById('clear-all').addEventListener('click', () => {
+      if (!responses.length) {
+        showToast('Список уже пуст');
+        return;
+      }
+
+      if (window.confirm('Очистить все ответы?')) {
+        responses = [];
+        persistResponses();
+        renderResponses();
+        showToast('Список очищен');
+      }
+    });
+
+    document.getElementById('export-json').addEventListener('click', async () => {
+      const payload = JSON.stringify(responses, null, 2);
+
+      try {
+        if (navigator.clipboard && window.isSecureContext) {
+          await navigator.clipboard.writeText(payload);
+          showToast('JSON скопирован');
+        } else {
+          const blob = new Blob([payload], { type: 'application/json;charset=utf-8' });
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = 'wedding-responses.json';
+          link.click();
+          URL.revokeObjectURL(url);
+          showToast('JSON скачан');
+        }
+      } catch (error) {
+        const blob = new Blob([payload], { type: 'application/json;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'wedding-responses.json';
+        link.click();
+        URL.revokeObjectURL(url);
+        showToast('JSON скачан');
+      }
+    });
+  </script>
+</body>
+</html>
