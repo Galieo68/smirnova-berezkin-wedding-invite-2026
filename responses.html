@@ -37,18 +37,11 @@
     <div class="badge reveal">Для жениха и невесты</div>
     <section class="card reveal">
       <h1>Ответы гостей</h1>
-      <p>Введите код доступа и смотрите ответы, которые гости оставляют в приглашении.</p>
-      <form id="access-form" class="form">
-        <div class="field">
-          <label for="admin-key">Код доступа</label>
-          <input id="admin-key" type="password" placeholder="Код доступа" autocomplete="one-time-code" required>
-        </div>
-        <div class="row">
-          <button class="btn primary" type="submit">Открыть</button>
-          <button class="btn" type="button" id="refresh">Обновить</button>
-          <button class="btn" type="button" id="copy">Копировать JSON</button>
-        </div>
-      </form>
+      <p>Ответы обновляются автоматически. Здесь видна сводка по гостям, которые оставили ответ в приглашении.</p>
+      <div class="row" style="margin-top:18px">
+        <button class="btn primary" type="button" id="refresh">Обновить</button>
+        <button class="btn" type="button" id="copy">Копировать JSON</button>
+      </div>
     </section>
 
     <section class="stats reveal" aria-label="Сводка">
@@ -67,31 +60,30 @@
   </main>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
   <script>
-    const LOCAL_API_ROOT='/api/responses', TOKEN='5c7371a5-7d0e-4129-a96b-4a054daf2944', WEBHOOK_REQUESTS=`https://webhook.site/token/${TOKEN}/requests`, KEY='wedding-admin-key-v1';
-    const accessForm=document.getElementById('access-form'), keyInput=document.getElementById('admin-key'), refreshBtn=document.getElementById('refresh'), copyBtn=document.getElementById('copy'), list=document.getElementById('list'), toast=document.getElementById('toast');
+    const LOCAL_API_ROOT='/api/responses', TOKEN='5c7371a5-7d0e-4129-a96b-4a054daf2944', WEBHOOK_REQUESTS=`https://webhook.site/token/${TOKEN}/requests`;
+    const refreshBtn=document.getElementById('refresh'), copyBtn=document.getElementById('copy'), list=document.getElementById('list'), toast=document.getElementById('toast');
     const counts={going:document.getElementById('going-count'),notGoing:document.getElementById('not-going-count'),maybe:document.getElementById('maybe-count'),total:document.getElementById('total-count')};
-    const revealItems=document.querySelectorAll('.reveal'); let key=sessionStorage.getItem(KEY)||'', responses=[], toastTimer=null, autoTimer=null;
+    const revealItems=document.querySelectorAll('.reveal'); let responses=[], toastTimer=null, autoTimer=null;
     const showToast=(m)=>{toast.textContent=m;toast.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>toast.classList.remove('show'),2200)};
     const esc=(v)=>String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
     const fmt=(v)=>{try{return new Intl.DateTimeFormat('ru-RU',{dateStyle:'medium',timeStyle:'short'}).format(new Date(v))}catch{return v}};
     const status=(v)=>v==='going'?['Идёт','going']:v==='not-going'?['Не идёт','not-going']:['Пока не знает','maybe'];
     const party=(v)=>v==='pair'?['В паре','pair']:['Один','solo'];
-    const lock=(m)=>{counts.going.textContent=counts.notGoing.textContent=counts.maybe.textContent=counts.total.textContent='0'; list.innerHTML=`<div class="empty">${esc(m)}</div>`};
+    const showEmpty=(m)=>{counts.going.textContent=counts.notGoing.textContent=counts.maybe.textContent=counts.total.textContent='0'; list.innerHTML=`<div class="empty">${esc(m)}</div>`};
     const parseLocal=(item)=>({id:String(item.id||''),name:String(item.name||'').trim()||'Гость',status:['going','not-going','maybe'].includes(item.status)?item.status:'maybe',partySize:['solo','pair'].includes(item.partySize)?item.partySize:'solo',note:String(item.note||'').trim(),createdAt:String(item.createdAt||new Date().toISOString())});
     const parseWebhook=(item)=>{let p={};try{p=item.content?JSON.parse(item.content):{}}catch{} return {id:String(item.uuid||''),name:String(p.name||'').trim()||'Гость',status:['going','not-going','maybe'].includes(p.status)?p.status:'maybe',partySize:['solo','pair'].includes(p.partySize)?p.partySize:'solo',note:String(p.note||'').trim(),createdAt:String(item.created_at||new Date().toISOString())}};
     const render=()=>{counts.going.textContent=responses.filter(r=>r.status==='going').length;counts.notGoing.textContent=responses.filter(r=>r.status==='not-going').length;counts.maybe.textContent=responses.filter(r=>r.status==='maybe').length;counts.total.textContent=responses.length;
       list.innerHTML=responses.length?responses.map(r=>{const s=status(r.status); const p=party(r.partySize); return `<article class="item"><div><div class="response-top"><div class="name">${esc(r.name)}</div><span class="pill ${s[1]}">${s[0]}</span><span class="pill ${p[1]}">${p[0]}</span></div><div class="meta">Добавлено: ${esc(fmt(r.createdAt))}${r.note?`<div>Примечание: ${esc(r.note)}</div>`:''}</div></div></article>`}).join(''):`<div class="empty">Пока нет ответов. Как только гости начнут заполнять приглашение, они появятся здесь.</div>`};
-    async function loadFromLocal(){ const r=await fetch(`${LOCAL_API_ROOT}?key=${encodeURIComponent(key)}`,{headers:{Accept:'application/json'}}); if(!r.ok) throw new Error('Local API unavailable'); const payload=await r.json(); responses=Array.isArray(payload.responses)?payload.responses.map(parseLocal):[]; }
+    async function loadFromLocal(){ const r=await fetch(LOCAL_API_ROOT,{headers:{Accept:'application/json'}}); if(!r.ok) throw new Error('Local API unavailable'); const payload=await r.json(); responses=Array.isArray(payload.responses)?payload.responses.map(parseLocal):[]; }
     async function loadFromWebhook(){ const r=await fetch(`${WEBHOOK_REQUESTS}?sorting=newest&per_page=100`,{headers:{Accept:'application/json','Content-Type':'application/json'}}); if(!r.ok) throw new Error('Webhook unavailable'); const payload=await r.json(); responses=(payload.data||[]).filter(x=>x.method==='POST').map(parseWebhook); }
-    async function load(silent=false){ if(!key){lock('Введите код доступа, чтобы увидеть ответы.');return false} try{await loadFromLocal()}catch(localError){try{await loadFromWebhook()}catch(webhookError){ if(!silent) showToast('Не удалось загрузить ответы'); return false }} render(); return true }
-    const startAuto=()=>{clearInterval(autoTimer); autoTimer=setInterval(()=>{if(key) load(true)},15000)};
+    async function load(silent=false){ try{await loadFromLocal()}catch(localError){try{await loadFromWebhook()}catch(webhookError){ responses=[]; showEmpty('Не удалось загрузить ответы'); if(!silent) showToast('Не удалось загрузить ответы'); return false }} render(); return true }
+    const startAuto=()=>{clearInterval(autoTimer); autoTimer=setInterval(()=>{load(true)},15000)};
     revealItems.forEach((el,i)=>el.style.setProperty('--d',`${i*90}ms`)); document.documentElement.classList.remove('no-js'); document.documentElement.classList.add('js');
     if ('IntersectionObserver' in window) { const observer=new IntersectionObserver((entries)=>entries.forEach((e)=>{if(e.isIntersecting){e.target.classList.add('on');observer.unobserve(e.target)}}),{threshold:.2}); revealItems.forEach((el)=>observer.observe(el)); } else { revealItems.forEach((el)=>el.classList.add('on')); }
-    const boot=()=>{keyInput.value=key; load(true); startAuto()};
-    if(key){boot()} else {lock('Введите код доступа, чтобы увидеть ответы.')}
-    accessForm.addEventListener('submit',async(e)=>{e.preventDefault(); const next=keyInput.value.trim(); if(!next){showToast('Введите код доступа');return} key=next; sessionStorage.setItem(KEY,key); if(await load()){showToast('Доступ открыт')} startAuto()});
-    refreshBtn.addEventListener('click',()=>{if(!keyInput.value.trim()&&!key){showToast('Введите код доступа');keyInput.focus();return} if(!key&&keyInput.value.trim()){key=keyInput.value.trim();sessionStorage.setItem(KEY,key)} load(); startAuto()});
-    copyBtn.addEventListener('click',async()=>{if(!key){showToast('Сначала откройте доступ');return} const payload=JSON.stringify(responses,null,2); try{await navigator.clipboard.writeText(payload); showToast('JSON скопирован')}catch{showToast('Не удалось скопировать JSON')}});
+    const boot=async()=>{await load(true); startAuto()};
+    boot();
+    refreshBtn.addEventListener('click',()=>{load().then(()=>startAuto())});
+    copyBtn.addEventListener('click',async()=>{const payload=JSON.stringify(responses,null,2); try{await navigator.clipboard.writeText(payload); showToast('JSON скопирован')}catch{showToast('Не удалось скопировать JSON')}});
   </script>
 </body>
 </html>
