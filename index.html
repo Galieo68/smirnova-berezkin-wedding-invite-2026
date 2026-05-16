@@ -451,18 +451,292 @@
       line-height: 1.8;
     }
 
-    .rsvp {
+    .rsvp-form {
+      margin-top: 22px;
       display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
-      gap: 20px;
-      align-items: center;
+      gap: 14px;
     }
 
-    .rsvp p {
+    .field {
+      display: grid;
+      gap: 8px;
+    }
+
+    .field label {
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      font-size: 0.7rem;
+      font-weight: 700;
+    }
+
+    .field input,
+    .field textarea {
+      width: 100%;
+      padding: 15px 16px;
+      border-radius: 16px;
+      border: 1px solid rgba(82, 61, 42, 0.12);
+      background: rgba(255, 255, 255, 0.76);
+      color: var(--text);
+      font: inherit;
+      line-height: 1.5;
+      transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease, background-color 180ms ease;
+    }
+
+    .field input:focus,
+    .field textarea:focus {
+      outline: none;
+      border-color: rgba(155, 120, 82, 0.35);
+      box-shadow: 0 0 0 4px rgba(155, 120, 82, 0.12);
+      background: rgba(255, 255, 255, 0.92);
+    }
+
+    .field textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .status-group {
+      gap: 10px;
+    }
+
+    .status-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+    }
+
+    .status-option {
+      position: relative;
+      display: block;
+      cursor: pointer;
+    }
+
+    .status-option input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .status-card {
+      display: grid;
+      gap: 6px;
+      min-height: 100%;
+      padding: 16px 18px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.55);
+      border: 1px solid rgba(82, 61, 42, 0.09);
+      transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
+    }
+
+    .status-option:hover .status-card {
+      transform: translateY(-2px);
+      border-color: rgba(155, 120, 82, 0.18);
+      background: rgba(255, 255, 255, 0.78);
+    }
+
+    .status-option input:focus-visible + .status-card {
+      outline: 2px solid rgba(155, 120, 82, 0.24);
+      outline-offset: 2px;
+    }
+
+    .status-option input:checked + .status-card {
+      border-color: rgba(155, 120, 82, 0.24);
+      background: rgba(255, 255, 255, 0.84);
+      box-shadow: 0 16px 34px rgba(77, 57, 38, 0.08);
+      transform: translateY(-2px);
+    }
+
+    .status-title {
+      font-family: var(--serif);
+      font-size: 1.12rem;
+      font-weight: 500;
+    }
+
+    .status-note {
+      color: var(--muted);
+      line-height: 1.55;
+      font-size: 0.92rem;
+    }
+
+    .form-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 6px;
+    }
+
+    .form-actions .button {
+      flex: 1 1 220px;
+    }
+
+    .response-note {
       margin: 0;
       color: var(--muted);
       line-height: 1.8;
-      max-width: 68ch;
+    }
+
+    .admin-shell {
+      margin-top: 18px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .stat {
+      padding: 18px 20px;
+      border-radius: var(--radius-md);
+      background: rgba(255, 255, 255, 0.55);
+      border: 1px solid rgba(82, 61, 42, 0.09);
+      transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+    }
+
+    .stat:hover {
+      transform: translateY(-3px);
+      border-color: rgba(155, 120, 82, 0.18);
+      box-shadow: 0 16px 34px rgba(77, 57, 38, 0.08);
+    }
+
+    .stat-value {
+      margin: 0 0 6px;
+      font-family: var(--serif);
+      font-size: 2rem;
+      color: var(--accent);
+      line-height: 1;
+    }
+
+    .stat-label {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .layout {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+      gap: 18px;
+      align-items: start;
+    }
+
+    .form-card,
+    .list-card {
+      padding: clamp(22px, 3.4vw, 38px);
+    }
+
+    .list-head {
+      display: grid;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .responses {
+      display: grid;
+      gap: 12px;
+    }
+
+    .response {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 14px;
+      padding: 18px 20px;
+      border-radius: var(--radius-md);
+      border: 1px solid rgba(82, 61, 42, 0.09);
+      background: rgba(255, 255, 255, 0.5);
+      transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+    }
+
+    .response:hover {
+      transform: translateY(-2px);
+      border-color: rgba(155, 120, 82, 0.18);
+      box-shadow: 0 16px 34px rgba(77, 57, 38, 0.08);
+    }
+
+    .response-main {
+      display: grid;
+      gap: 8px;
+    }
+
+    .response-top {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .response-name {
+      font-size: 1.05rem;
+      font-weight: 700;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 0.76rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .pill.going {
+      background: rgba(209, 224, 202, 0.75);
+      color: #3f5c34;
+    }
+
+    .pill.not-going {
+      background: rgba(242, 216, 210, 0.8);
+      color: #7a3427;
+    }
+
+    .pill.maybe {
+      background: rgba(238, 228, 200, 0.84);
+      color: #7a6030;
+    }
+
+    .response-meta {
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .response-actions {
+      display: flex;
+      align-items: start;
+      gap: 8px;
+    }
+
+    .mini-button {
+      appearance: none;
+      border: 1px solid rgba(82, 61, 42, 0.12);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.7);
+      color: var(--text);
+      padding: 10px 12px;
+      font: inherit;
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: transform 180ms ease, border-color 180ms ease, background-color 180ms ease;
+    }
+
+    .mini-button:hover {
+      transform: translateY(-1px);
+      border-color: rgba(155, 120, 82, 0.2);
+      background: rgba(255, 255, 255, 0.92);
+    }
+
+    .empty {
+      padding: 24px;
+      border-radius: 22px;
+      border: 1px dashed rgba(82, 61, 42, 0.16);
+      background: rgba(255, 255, 255, 0.44);
+      color: var(--muted);
+      line-height: 1.8;
+      text-align: center;
     }
 
     .footer {
@@ -567,7 +841,12 @@
         grid-template-columns: 1fr;
       }
 
-      .rsvp {
+      .status-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .stats,
+      .layout {
         grid-template-columns: 1fr;
       }
     }
@@ -606,6 +885,10 @@
         width: 48px;
         height: 48px;
       }
+
+      .response {
+        grid-template-columns: 1fr;
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -642,7 +925,7 @@
           </p>
           <div class="hero-actions">
             <a class="button primary" href="#details">Открыть приглашение</a>
-            <a class="button secondary" href="responses.html">Страница ответов</a>
+            <a class="button secondary" href="#rsvp">Оставить ответ</a>
           </div>
           <p class="quote">«Пусть рядом будут самые дорогие люди, а каждый миг этого дня останется в памяти навсегда.»</p>
         </div>
@@ -665,7 +948,7 @@
           </div>
           <div class="fact">
             <dt>Ответ</dt>
-            <dd>Скопируйте текст подтверждения и отправьте его любым удобным способом.</dd>
+            <dd>Ответьте прямо в форме ниже, и мы сразу увидим ваше сообщение.</dd>
           </div>
         </dl>
       </aside>
@@ -734,29 +1017,226 @@
       </p>
     </section>
 
+    <section class="section panel reveal" id="rsvp">
+      <header class="section-header">
+        <span class="section-label">Ответ на приглашение</span>
+        <h2 class="section-title">Сообщите свой ответ прямо здесь</h2>
+        <p class="section-subtitle">
+          Выберите, пойдёте ли вы на свадьбу, и укажите, придёте один или в паре.
+        </p>
+      </header>
+
+      <form class="rsvp-form" id="rsvp-form">
+        <div class="field">
+          <label for="guest-name">Ваше имя</label>
+          <input id="guest-name" name="guest-name" type="text" placeholder="Например, Анна и Сергей" required>
+        </div>
+
+        <div class="field status-group">
+          <label>Пойдёте на свадьбу?</label>
+          <div class="status-grid">
+            <label class="status-option">
+              <input type="radio" name="status" value="going" checked>
+              <span class="status-card">
+                <span class="status-title">Пойду</span>
+                <span class="status-note">Буду на свадьбе</span>
+              </span>
+            </label>
+            <label class="status-option">
+              <input type="radio" name="status" value="not-going">
+              <span class="status-card">
+                <span class="status-title">Не пойду</span>
+                <span class="status-note">К сожалению, не получится</span>
+              </span>
+            </label>
+            <label class="status-option">
+              <input type="radio" name="status" value="maybe">
+              <span class="status-card">
+                <span class="status-title">Ещё не знаю</span>
+                <span class="status-note">Нужно чуть больше времени</span>
+              </span>
+            </label>
+          </div>
+        </div>
+
+        <div class="field status-group">
+          <label>Сколько человек придёт?</label>
+          <div class="status-grid">
+            <label class="status-option">
+              <input type="radio" name="party-size" value="solo" checked>
+              <span class="status-card">
+                <span class="status-title">Один</span>
+                <span class="status-note">Приду сам(а)</span>
+              </span>
+            </label>
+            <label class="status-option">
+              <input type="radio" name="party-size" value="pair">
+              <span class="status-card">
+                <span class="status-title">В паре</span>
+                <span class="status-note">Приходим вдвоём</span>
+              </span>
+            </label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="guest-note">Комментарий</label>
+          <textarea id="guest-note" name="guest-note" placeholder="Например, приду один(одна), в паре или только на церемонию"></textarea>
+        </div>
+
+        <div class="form-actions">
+          <button class="button primary" type="submit">Отправить ответ</button>
+        </div>
+
+        <p class="response-note">После отправки ваш ответ увидят только жених и невеста.</p>
+      </form>
+    </section>
+
     <footer class="footer reveal">
       С любовью, Смирнова Александра и Березкин Иван
     </footer>
   </main>
 
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
   <script>
+    const LOCAL_RESPONSE_SUBMIT_URL = '/api/responses';
+    const WEBHOOK_RESPONSE_SUBMIT_URL = 'https://webhook.site/5c7371a5-7d0e-4129-a96b-4a054daf2944';
+    const rsvpForm = document.getElementById('rsvp-form');
+    const nameInput = document.getElementById('guest-name');
+    const noteInput = document.getElementById('guest-note');
+    const toast = document.getElementById('toast');
     const revealItems = document.querySelectorAll('.reveal');
+    let toastTimer = null;
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add('show');
+
+      if (toastTimer) {
+        clearTimeout(toastTimer);
+      }
+
+      toastTimer = setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2200);
+    }
+
+    function getSelectedStatus() {
+      const selected = document.querySelector('input[name="status"]:checked');
+      return selected ? selected.value : 'going';
+    }
+
+    function getSelectedPartySize() {
+      const selected = document.querySelector('input[name="party-size"]:checked');
+      return selected ? selected.value : 'solo';
+    }
+
+    async function submitResponse(payload) {
+      const requestOptions = {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      };
+
+      for (const url of [LOCAL_RESPONSE_SUBMIT_URL, WEBHOOK_RESPONSE_SUBMIT_URL]) {
+        try {
+          const response = await fetch(url, requestOptions);
+
+          if (response.ok) {
+            return response;
+          }
+        } catch (error) {
+          // Try the next backend.
+        }
+      }
+
+      throw new Error('Request failed');
+    }
+
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>"']/g, (char) => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;',
+      }[char]));
+    }
+
+    function statusInfo(value) {
+      switch (value) {
+        case 'going':
+          return { label: 'Идёт', className: 'going' };
+        case 'not-going':
+          return { label: 'Не идёт', className: 'not-going' };
+        default:
+          return { label: 'Пока не знает', className: 'maybe' };
+      }
+    }
+
+    function formatDateTime(value) {
+      try {
+        return new Intl.DateTimeFormat('ru-RU', {
+          dateStyle: 'medium',
+          timeStyle: 'short',
+        }).format(new Date(value));
+      } catch (error) {
+        return value;
+      }
+    }
 
     revealItems.forEach((item, index) => {
       item.style.setProperty('--reveal-delay', `${Math.min(index * 90, 540)}ms`);
     });
 
-    revealItems.forEach((item) => {
-      const rect = item.getBoundingClientRect();
-      const visibleSoon = rect.top < window.innerHeight * 0.85 && rect.bottom > 0;
-
-      if (visibleSoon) {
-        item.classList.add('is-visible');
-      }
-    });
-
     document.documentElement.classList.remove('no-js');
     document.documentElement.classList.add('js');
+
+    if (rsvpForm) {
+      rsvpForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        const submitButton = rsvpForm.querySelector('button[type="submit"]');
+        const name = nameInput.value.trim();
+
+        if (!name) {
+          showToast('Введите имя гостя');
+          nameInput.focus();
+          return;
+        }
+
+        const originalText = submitButton.textContent;
+        submitButton.disabled = true;
+        submitButton.textContent = 'Отправляем...';
+
+        try {
+          await submitResponse({
+            name,
+            status: getSelectedStatus(),
+            partySize: getSelectedPartySize(),
+            note: noteInput.value.trim(),
+          });
+
+          rsvpForm.reset();
+          const goingRadio = rsvpForm.querySelector('input[value="going"]');
+
+          if (goingRadio) {
+            goingRadio.checked = true;
+          }
+
+          showToast('Ответ отправлен');
+        } catch (error) {
+          showToast('Не удалось отправить ответ');
+        } finally {
+          submitButton.disabled = false;
+          submitButton.textContent = originalText;
+        }
+      });
+    }
 
     if ('IntersectionObserver' in window) {
       const observer = new IntersectionObserver((entries) => {

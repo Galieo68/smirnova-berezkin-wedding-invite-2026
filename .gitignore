@@ -5,3 +5,4 @@ server.js
 localtunnel*
 ssh-tunnel*
 gh-auth*
+responses-data.json
