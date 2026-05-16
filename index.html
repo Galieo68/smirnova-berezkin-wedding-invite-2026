@@ -65,6 +65,7 @@
       border-radius: 50%;
       background: radial-gradient(circle, rgba(220, 201, 181, 0.55), rgba(220, 201, 181, 0) 70%);
       filter: blur(12px);
+      animation: orbDriftTop 18s ease-in-out infinite;
     }
 
     body::after {
@@ -75,6 +76,7 @@
       border-radius: 50%;
       background: radial-gradient(circle, rgba(192, 208, 189, 0.55), rgba(192, 208, 189, 0) 68%);
       filter: blur(14px);
+      animation: orbDriftBottom 20s ease-in-out infinite;
     }
 
     .page {
@@ -106,6 +108,7 @@
       font-size: 0.72rem;
       font-weight: 600;
       box-shadow: 0 10px 28px rgba(88, 64, 41, 0.06);
+      animation: softGlow 5s ease-in-out infinite;
     }
 
     .panel {
@@ -128,6 +131,7 @@
       position: relative;
       overflow: hidden;
       padding: clamp(24px, 4vw, 46px);
+      animation: heroDrift 10s ease-in-out infinite;
     }
 
     .hero-card::before,
@@ -154,6 +158,17 @@
       bottom: -5rem;
       background: radial-gradient(circle, rgba(191, 206, 187, 0.38), rgba(191, 206, 187, 0) 70%);
     }
+
+    .hero-copy > * {
+      animation: riseUp 0.8s ease both;
+    }
+
+    .hero-copy > *:nth-child(1) { animation-delay: 0.05s; }
+    .hero-copy > *:nth-child(2) { animation-delay: 0.12s; }
+    .hero-copy > *:nth-child(3) { animation-delay: 0.2s; }
+    .hero-copy > *:nth-child(4) { animation-delay: 0.28s; }
+    .hero-copy > *:nth-child(5) { animation-delay: 0.36s; }
+    .hero-copy > *:nth-child(6) { animation-delay: 0.44s; }
 
     .hero-copy {
       position: relative;
@@ -251,74 +266,12 @@
       line-height: 1.7;
     }
 
-    .share-panel {
-      display: grid;
-      grid-template-columns: minmax(0, 1.2fr) minmax(260px, 0.8fr);
-      gap: 16px;
-      align-items: stretch;
-    }
-
-    .share-copy {
-      display: grid;
-      gap: 14px;
-      align-content: start;
-    }
-
-    .share-field {
-      display: grid;
-      gap: 8px;
-    }
-
-    .share-field label {
-      color: var(--accent);
-      text-transform: uppercase;
-      letter-spacing: 0.22em;
-      font-size: 0.72rem;
-      font-weight: 700;
-    }
-
-    .share-input {
-      width: 100%;
-      padding: 16px 18px;
-      border-radius: 16px;
-      border: 1px solid rgba(82, 61, 42, 0.12);
-      background: rgba(255, 255, 255, 0.78);
-      color: var(--text);
-      font: inherit;
-      font-size: 0.95rem;
-      line-height: 1.5;
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
-    }
-
-    .share-input:focus {
-      outline: 2px solid rgba(155, 120, 82, 0.22);
-      outline-offset: 2px;
-    }
-
-    .share-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    .share-actions .button {
-      flex: 1 1 180px;
-    }
-
-    .share-note {
-      padding: 20px;
-      border-radius: 22px;
-      background: linear-gradient(180deg, rgba(155, 120, 82, 0.1), rgba(255, 255, 255, 0.52));
-      border: 1px solid rgba(155, 120, 82, 0.12);
-      color: var(--muted);
-      line-height: 1.8;
-    }
-
     .side-card {
       padding: 24px;
       display: grid;
       gap: 18px;
       align-content: start;
+      animation: cardFloat 9s ease-in-out infinite;
     }
 
     .monogram {
@@ -347,6 +300,13 @@
       border-radius: 20px;
       background: rgba(255, 255, 255, 0.55);
       border: 1px solid rgba(82, 61, 42, 0.09);
+      transition: transform 180ms ease, border-color 180ms ease, background-color 180ms ease;
+    }
+
+    .fact:hover {
+      transform: translateY(-2px);
+      border-color: rgba(155, 120, 82, 0.22);
+      background: rgba(255, 255, 255, 0.74);
     }
 
     .fact dt {
@@ -412,6 +372,13 @@
       background: rgba(255, 255, 255, 0.55);
       border: 1px solid rgba(82, 61, 42, 0.09);
       min-height: 100%;
+      transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(155, 120, 82, 0.18);
+      box-shadow: 0 16px 34px rgba(77, 57, 38, 0.08);
     }
 
     .card h3 {
@@ -442,6 +409,13 @@
       border-radius: var(--radius-md);
       border: 1px solid rgba(82, 61, 42, 0.09);
       background: rgba(255, 255, 255, 0.5);
+      transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+    }
+
+    .timeline-item:hover {
+      transform: translateY(-3px);
+      border-color: rgba(155, 120, 82, 0.2);
+      box-shadow: 0 16px 34px rgba(77, 57, 38, 0.08);
     }
 
     .step {
@@ -523,8 +497,9 @@
 
     .js .reveal {
       opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 700ms ease, transform 700ms ease;
+      transform: translateY(28px) scale(0.985);
+      transition: opacity 800ms ease, transform 800ms cubic-bezier(0.2, 0.7, 0.2, 1);
+      transition-delay: var(--reveal-delay, 0ms);
     }
 
     .js .reveal.is-visible {
@@ -532,10 +507,55 @@
       transform: translateY(0);
     }
 
+    .badge.is-visible {
+      animation: badgePulse 1.2s ease-out both, softGlow 5s ease-in-out infinite 1.2s;
+    }
+
     .placeholder {
       color: var(--accent);
       border-bottom: 1px dotted rgba(155, 120, 82, 0.65);
       padding-bottom: 1px;
+    }
+
+    @keyframes riseUp {
+      from {
+        opacity: 0;
+        transform: translateY(14px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes heroDrift {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
+    }
+
+    @keyframes cardFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+    @keyframes badgePulse {
+      0% { transform: scale(0.98); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes softGlow {
+      0%, 100% { filter: drop-shadow(0 0 0 rgba(155, 120, 82, 0)); }
+      50% { filter: drop-shadow(0 0 14px rgba(155, 120, 82, 0.12)); }
+    }
+
+    @keyframes orbDriftTop {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(-14px, 18px) scale(1.04); }
+    }
+
+    @keyframes orbDriftBottom {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(16px, -14px) scale(1.05); }
     }
 
     @media (max-width: 960px) {
@@ -548,10 +568,6 @@
       }
 
       .rsvp {
-        grid-template-columns: 1fr;
-      }
-
-      .share-panel {
         grid-template-columns: 1fr;
       }
     }
@@ -591,6 +607,18 @@
         height: 48px;
       }
     }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -614,7 +642,6 @@
           </p>
           <div class="hero-actions">
             <a class="button primary" href="#details">Открыть приглашение</a>
-            <button class="button secondary" type="button" id="copy-link-top">Скопировать ссылку</button>
             <button class="button secondary" type="button" id="copy-rsvp-top">Скопировать ответ</button>
           </div>
           <p class="quote">«Пусть рядом будут самые дорогие люди, а каждый миг этого дня останется в памяти навсегда.»</p>
@@ -634,11 +661,11 @@
           </div>
           <div class="fact">
             <dt>Маршрут</dt>
-            <dd>ЗАГС и ещё одна локация, точный адрес которой сообщим позже</dd>
+            <dd>Дом Дружбы Народов — это ЗАГС, затем ещё одна локация</dd>
           </div>
           <div class="fact">
-            <dt>Ссылка</dt>
-            <dd>Можно скопировать и отправить этот адрес друзьям и родственникам.</dd>
+            <dt>Ответ</dt>
+            <dd>Скопируйте текст подтверждения и отправьте его любым удобным способом.</dd>
           </div>
         </dl>
       </aside>
@@ -673,10 +700,9 @@
     <section class="section panel reveal">
       <header class="section-header">
         <span class="section-label">Маршрут дня</span>
-        <h2 class="section-title">08.08.26, 10:40 и Дом Дружбы Народов</h2>
+        <h2 class="section-title">08.08.26, 10:40 — Дом Дружбы Народов (ЗАГС)</h2>
         <p class="section-subtitle">
-          Просим быть у Дома Дружбы Народов к 10:40. Далее нас ждёт ЗАГС и ещё одна локация,
-          адрес которой мы добавим, как только он будет известен.
+          Просим быть у Дома Дружбы Народов к 10:40. Это ЗАГС, а после него нас ждёт ещё одна локация.
         </p>
       </header>
 
@@ -684,15 +710,15 @@
         <article class="timeline-item">
           <div class="step">1</div>
           <div>
-            <h3>10:40 - Дом Дружбы Народов</h3>
-            <p>Просим быть вовремя: именно здесь начнётся наш день и сбор гостей.</p>
+            <h3>10:40 — Дом Дружбы Народов (ЗАГС)</h3>
+            <p>Просим быть вовремя: именно здесь начнётся наш день, и здесь же находится ЗАГС.</p>
           </div>
         </article>
         <article class="timeline-item">
           <div class="step">2</div>
           <div>
-            <h3>ЗАГС</h3>
-            <p>Официальная часть торжества и один из самых важных моментов дня.</p>
+            <h3>Официальная часть</h3>
+            <p>Один из самых важных моментов дня, без лишней суеты и с самыми близкими.</p>
           </div>
         </article>
         <article class="timeline-item">
@@ -704,7 +730,7 @@
         </article>
       </div>
       <p class="schedule-note">
-        Если захотите, я потом оформлю этот маршрут ещё короче или добавлю отдельный блок с адресами и подсказкой по дороге.
+        Вторая локация пока уточняется. Как только адрес появится, мы сразу сообщим его гостям.
       </p>
     </section>
 
@@ -714,39 +740,11 @@
           <span class="section-label">Подтверждение</span>
           <h2 class="section-title">Если вы будете с нами, дайте знать удобным сообщением</h2>
           <p>
-            Кнопка скопирует короткий текст ответа, который можно сразу отправить в мессенджере
-            или просто сохранить для себя.
+            Кнопка копирует короткий текст ответа, который можно сразу отправить в мессенджере
+            или сохранить для себя.
           </p>
         </div>
         <button class="button primary" type="button" id="copy-rsvp-bottom">Скопировать ответ</button>
-      </div>
-    </section>
-
-    <section class="section panel reveal" id="share">
-      <header class="section-header">
-        <span class="section-label">Ссылка для гостей</span>
-        <h2 class="section-title">Готовый адрес приглашения для отправки в мессенджер</h2>
-        <p class="section-subtitle">
-          Скопируйте текущую ссылку и отправьте её близким. Когда страница открыта по публичному адресу,
-          именно этот адрес и будет работать у гостей.
-        </p>
-      </header>
-
-      <div class="share-panel">
-        <div class="share-copy">
-          <div class="share-field">
-            <label for="invite-link">Адрес приглашения</label>
-            <input class="share-input" id="invite-link" type="text" readonly value="">
-          </div>
-          <div class="share-actions">
-            <button class="button primary" type="button" id="copy-link-bottom">Скопировать ссылку</button>
-            <button class="button secondary" type="button" id="share-native">Поделиться</button>
-          </div>
-        </div>
-        <div class="share-note">
-          Совет: после публикации держите вкладку с сайтом открытой, чтобы ссылка продолжала работать.
-          Если хотите, я могу сразу добавить сюда дату, место и короткий маршрут до зала.
-        </div>
       </div>
     </section>
 
@@ -760,10 +758,12 @@
   <script>
     const rsvpText = 'Здравствуйте! С радостью буду на свадьбе Смирновой Александры и Березкина Ивана.';
     const toast = document.getElementById('toast');
-    const inviteLinkField = document.getElementById('invite-link');
     let toastTimer = null;
     const revealItems = document.querySelectorAll('.reveal');
-    const inviteUrl = window.location.href;
+
+    revealItems.forEach((item, index) => {
+      item.style.setProperty('--reveal-delay', `${Math.min(index * 90, 540)}ms`);
+    });
 
     revealItems.forEach((item) => {
       const rect = item.getBoundingClientRect();
@@ -776,7 +776,6 @@
 
     document.documentElement.classList.remove('no-js');
     document.documentElement.classList.add('js');
-    inviteLinkField.value = inviteUrl;
 
     function showToast(message) {
       toast.textContent = message;
@@ -819,29 +818,6 @@
     document.querySelectorAll('#copy-rsvp-top, #copy-rsvp-bottom').forEach((button) => {
       button.addEventListener('click', () => copyText(rsvpText));
     });
-
-    document.querySelectorAll('#copy-link-top, #copy-link-bottom').forEach((button) => {
-      button.addEventListener('click', () => copyText(inviteUrl));
-    });
-
-    const shareNativeButton = document.getElementById('share-native');
-
-    if (navigator.share) {
-      shareNativeButton.addEventListener('click', async () => {
-        try {
-          await navigator.share({
-            title: 'Свадьба Смирновой Александры и Березкина Ивана',
-            text: 'Приглашение на свадьбу Смирновой Александры и Березкина Ивана',
-            url: inviteUrl,
-          });
-        } catch (error) {
-          // User cancelled sharing.
-        }
-      });
-    } else {
-      shareNativeButton.addEventListener('click', () => copyText(inviteUrl));
-      shareNativeButton.textContent = 'Скопировать ссылку';
-    }
 
     if ('IntersectionObserver' in window) {
       const observer = new IntersectionObserver((entries) => {
